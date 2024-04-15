@@ -12,6 +12,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.2" />
+    <PackageReference Include="quartz.Extensions.Hosting" Version="3.8.1" />
   </ItemGroup>
 
   <ItemGroup>

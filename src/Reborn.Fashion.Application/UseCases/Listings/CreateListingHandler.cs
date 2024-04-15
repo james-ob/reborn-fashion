@@ -26,10 +26,12 @@ public static partial class CreateListingMapper
 public class CreateListingHandler : ICommandHandler<CreateListingCommand, Guid>
 {
     private readonly IApplicationDbContext dbContext;
+    private readonly IJobScheduler scheduler;
 
-    public CreateListingHandler(IApplicationDbContext dbContext)
+    public CreateListingHandler(IApplicationDbContext dbContext, IJobScheduler scheduler)
     {
         this.dbContext = dbContext;
+        this.scheduler = scheduler;
     }
 
     public async ValueTask<Guid> Handle(
@@ -40,6 +42,7 @@ public class CreateListingHandler : ICommandHandler<CreateListingCommand, Guid>
         var listing = CreateListingMapper.ToListing(request);
         await dbContext.Listings.AddAsync(listing);
         await dbContext.SaveChangesAsync(cancellationToken);
+        await scheduler.ScheduleListingOpen(listing.Id, listing.DateRange.Start);
 
         return listing.Id;
     }

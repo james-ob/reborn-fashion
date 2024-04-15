@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Quartz;
 using Reborn.Fashion.Application.Interfaces;
+using Reborn.Fashion.Infrastructure.Jobs;
 
 namespace Reborn.Fashion.Infrastructure;
 
@@ -19,6 +21,11 @@ public static class DependencyInjection
         services.AddScoped<IApplicationDbContext>(provider =>
             provider.GetRequiredService<ApplicationDbContext>()
         );
+
+        services.AddScoped<IJobScheduler, JobScheduler>();
+
+        services.AddQuartz();
+        services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 
         return services;
     }

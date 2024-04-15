@@ -3,21 +3,19 @@ using Reborn.Fashion.Application.Interfaces;
 
 namespace Reborn.Fashion.Application.UseCases.Listings;
 
-public record OpenListingCommand(Guid ListingId) : ICommand;
+public record CloseListingCommand(Guid ListingId) : ICommand;
 
-public class OpenListingHandler : ICommandHandler<OpenListingCommand>
+public class CloseListingHandler : ICommandHandler<CloseListingCommand>
 {
     private readonly IApplicationDbContext dbContext;
-    private readonly IJobScheduler scheduler;
 
-    public OpenListingHandler(IApplicationDbContext dbContext, IJobScheduler scheduler)
+    public CloseListingHandler(IApplicationDbContext dbContext)
     {
         this.dbContext = dbContext;
-        this.scheduler = scheduler;
     }
 
     public async ValueTask<Unit> Handle(
-        OpenListingCommand request,
+        CloseListingCommand request,
         CancellationToken cancellationToken
     )
     {
@@ -25,11 +23,8 @@ public class OpenListingHandler : ICommandHandler<OpenListingCommand>
             await dbContext.Listings.FindAsync(request.ListingId)
             ?? throw new ArgumentException("Listing not found");
 
-        listing.Open();
+        listing.Close();
         await dbContext.SaveChangesAsync(cancellationToken);
-
-        if (listing.DateRange.End is not null)
-            await scheduler.ScheduleListingClose(listing.Id, (DateTime)listing.DateRange.End);
 
         return default;
     }
