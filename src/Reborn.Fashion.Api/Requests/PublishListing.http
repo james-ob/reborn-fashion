@@ -1,0 +1,8 @@
+@Reborn_Fashion_Api_HostAddress = http://localhost:5157
+@Listing_Id=647c5412-e0ef-4a96-8423-4ecc880fa015
+
+POST  {{Reborn_Fashion_Api_HostAddress}}/listings/{{Listing_Id}}/publish
+Accept: application/json
+Content-Type: application/json
+
+###
