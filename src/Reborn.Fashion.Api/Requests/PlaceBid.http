@@ -1,0 +1,12 @@
+@Reborn_Fashion_Api_HostAddress = http://localhost:5157
+@Listing_Id = d3abf3c2-ad7f-46be-aab2-6aa9ccd40aad
+
+POST {{Reborn_Fashion_Api_HostAddress}}/listings/{{Listing_Id}}/place-bid
+Accept: application/json
+Content-Type: application/json
+
+{
+  "userId": "46a1f886-b459-4879-9d1c-253ae8eeee54",
+  "amount": 5.00
+}
+###

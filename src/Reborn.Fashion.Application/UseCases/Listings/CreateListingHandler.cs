@@ -6,8 +6,13 @@ using Riok.Mapperly.Abstractions;
 
 namespace Reborn.Fashion.Application.UseCases.Listings;
 
-public record CreateListingCommand(string Title, string Description, DateTime Start, DateTime? End)
-    : ICommand<Guid>;
+public record CreateListingCommand(
+    string Title,
+    string Description,
+    DateTime Start,
+    DateTime? End,
+    decimal? Reserve
+) : ICommand<Guid>;
 
 [Mapper]
 public static partial class CreateListingMapper

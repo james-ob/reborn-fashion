@@ -7,7 +7,8 @@ Content-Type: application/json
 {
   "title": "Test Listing",
   "description": "A listing to be used for testing",
-  "start": "2024-04-15T17:45:20.000Z",
-  "end": "2024-04-15T17:45:30.000Z"
+  "start": "2024-04-15T18:45:20.000Z",
+  "end": "2024-04-15T18:50:30.000Z",
+  "reserve": 10.5
 }
 ###

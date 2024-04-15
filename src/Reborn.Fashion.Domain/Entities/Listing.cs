@@ -17,6 +17,9 @@ public class Listing
     public string Description { get; set; }
     public ListingStatus Status { get; private set; } = ListingStatus.Draft;
     public DateRange DateRange { get; set; }
+    public List<Bid> Bids { get; } = new List<Bid>();
+    public Bid? CurrentBid => Bids.Find(b => b.IsCurrent);
+    public decimal? Reserve { get; set; }
 
     public void Publish()
     {
@@ -49,5 +52,33 @@ public class Listing
             throw new Exception("Listing is not live");
 
         Status = ListingStatus.Closed;
+    }
+
+    private Guid AddNewBid(Guid userId, decimal amount)
+    {
+        var newBid = new Bid(userId, amount, true);
+
+        if (CurrentBid is not null)
+            CurrentBid.IsCurrent = false;
+
+        Bids.Add(newBid);
+        return newBid.Id;
+    }
+
+    public Guid PlaceBid(Guid userId, decimal amount)
+    {
+        if (Status != ListingStatus.Live)
+            throw new Exception("Listing is not taking bids");
+
+        if (amount < 0)
+            throw new ArgumentException("Bid too low");
+
+        if (CurrentBid is null && Reserve is not null && amount < Reserve)
+            throw new Exception("Reserve not met");
+
+        if (CurrentBid is not null && amount <= CurrentBid.Amount)
+            throw new ArgumentException("Bid too low");
+
+        return AddNewBid(userId, amount);
     }
 }
