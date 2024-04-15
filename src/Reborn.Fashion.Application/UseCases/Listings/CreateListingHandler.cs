@@ -1,16 +1,26 @@
 using Mediator;
 using Reborn.Fashion.Application.Interfaces;
 using Reborn.Fashion.Domain.Entities;
+using Reborn.Fashion.Domain.ValueObjects;
 using Riok.Mapperly.Abstractions;
 
 namespace Reborn.Fashion.Application.UseCases.Listings;
 
-public record CreateListingCommand(string Title, string Description) : ICommand<Guid>;
+public record CreateListingCommand(string Title, string Description, DateTime Start, DateTime? End)
+    : ICommand<Guid>;
 
 [Mapper]
 public static partial class CreateListingMapper
 {
-    public static partial Listing ToListing(CreateListingCommand request);
+    private static partial Listing ToListingMapping(CreateListingCommand request);
+
+    public static Listing ToListing(CreateListingCommand request)
+    {
+        var listing = ToListingMapping(request);
+        var dateRange = new DateRange(request.Start, request.End);
+        listing.DateRange = dateRange;
+        return listing;
+    }
 }
 
 public class CreateListingHandler : ICommandHandler<CreateListingCommand, Guid>

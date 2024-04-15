@@ -1,3 +1,5 @@
+using Reborn.Fashion.Domain.ValueObjects;
+
 namespace Reborn.Fashion.Domain.Entities;
 
 public enum ListingStatus
@@ -14,6 +16,7 @@ public class Listing
     public string Title { get; set; }
     public string Description { get; set; }
     public ListingStatus Status { get; private set; } = ListingStatus.Draft;
+    public DateRange DateRange { get; set; }
 
     public void Publish()
     {
