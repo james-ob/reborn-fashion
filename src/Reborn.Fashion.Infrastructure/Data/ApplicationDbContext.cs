@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Reborn.Fashion.Application.Interfaces;
 using Reborn.Fashion.Domain.Entities;
@@ -17,5 +18,10 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         modelBuilder.Entity<Listing>().HasKey(l => l.Id);
         modelBuilder.Entity<Listing>().OwnsOne(l => l.DateRange);
+    }
+
+    public async Task<IDbContextTransaction> BeginTransaction()
+    {
+        return await Database.BeginTransactionAsync();
     }
 }

@@ -18,7 +18,7 @@ public class Listing
     public ListingStatus Status { get; private set; } = ListingStatus.Draft;
     public DateRange DateRange { get; set; }
     public List<Bid> Bids { get; } = new List<Bid>();
-    public Bid? CurrentBid => Bids.Find(b => b.IsCurrent);
+    public Bid CurrentBid => Bids.Find(b => b.IsCurrent);
     public decimal? Reserve { get; set; }
 
     public void Publish()
