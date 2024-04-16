@@ -71,13 +71,13 @@ public class Listing
             throw new Exception("Listing is not taking bids");
 
         if (amount < 0)
-            throw new ArgumentException("Bid too low");
+            throw new Exception("Bid too low");
 
         if (CurrentBid is null && Reserve is not null && amount < Reserve)
             throw new Exception("Reserve not met");
 
         if (CurrentBid is not null && amount <= CurrentBid.Amount)
-            throw new ArgumentException("Bid too low");
+            throw new Exception("Bid too low");
 
         return AddNewBid(userId, amount);
     }

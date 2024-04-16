@@ -20,6 +20,7 @@ public class PlaceBidHandler : ICommandHandler<PlaceBidCommand>
         CancellationToken cancellationToken
     )
     {
+        using var transaction = await dbContext.BeginTransaction();
         var listing =
             await dbContext
                 .Listings.Include(l => l.Bids)
@@ -28,6 +29,7 @@ public class PlaceBidHandler : ICommandHandler<PlaceBidCommand>
 
         listing.PlaceBid(request.UserId, request.Amount);
         await dbContext.SaveChangesAsync(cancellationToken);
+        transaction.Commit();
 
         return default;
     }
