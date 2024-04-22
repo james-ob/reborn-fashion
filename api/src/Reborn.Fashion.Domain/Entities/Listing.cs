@@ -26,7 +26,7 @@ public class Listing
         if (Status == ListingStatus.Published)
             return;
 
-        if (Status != ListingStatus.Draft)
+            if (Status != ListingStatus.Draft)
             throw new Exception("Listing cannot be published at this stage");
 
         Status = ListingStatus.Published;
