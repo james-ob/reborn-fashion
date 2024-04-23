@@ -10,7 +10,8 @@ public record GetListingResponse(
     string Title,
     string Description,
     DateTime Start,
-    DateTime? End
+    DateTime? End,
+    ListingStatus Status
 );
 
 public record GetListingRequest(Guid Id) : IRequest<GetListingResponse>;
