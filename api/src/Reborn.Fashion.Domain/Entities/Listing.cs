@@ -15,6 +15,7 @@ public class Listing
     public Guid Id { get; private set; }
     public string Title { get; set; }
     public string Description { get; set; }
+    public string ImageSrc { get; set; }
     public ListingStatus Status { get; private set; } = ListingStatus.Draft;
     public DateRange DateRange { get; set; }
     public List<Bid> Bids { get; } = new List<Bid>();
@@ -26,7 +27,7 @@ public class Listing
         if (Status == ListingStatus.Published)
             return;
 
-            if (Status != ListingStatus.Draft)
+        if (Status != ListingStatus.Draft)
             throw new Exception("Listing cannot be published at this stage");
 
         Status = ListingStatus.Published;

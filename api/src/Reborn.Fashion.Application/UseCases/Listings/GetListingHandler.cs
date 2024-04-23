@@ -9,6 +9,7 @@ public record GetListingResponse(
     Guid Id,
     string Title,
     string Description,
+    string ImageSrc,
     DateTime Start,
     DateTime? End,
     ListingStatus Status

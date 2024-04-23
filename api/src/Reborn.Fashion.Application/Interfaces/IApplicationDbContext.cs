@@ -9,4 +9,5 @@ public interface IApplicationDbContext
     DbSet<Listing> Listings { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     Task<IDbContextTransaction> BeginTransaction();
+    void RemoveRange(IEnumerable<object> entities);
 }
