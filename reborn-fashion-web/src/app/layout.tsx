@@ -30,7 +30,9 @@ export default function RootLayout({
               </Link>
             </div>
           </div>
-          {children}
+          <div className="flex-1">
+            {children}
+          </div>
         </main>
       </body>
     </html>
