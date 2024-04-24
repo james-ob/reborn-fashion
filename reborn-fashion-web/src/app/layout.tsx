@@ -23,14 +23,11 @@ export default function RootLayout({
             </Link>
             <div className="space-x-4">
               <Link href={"/login"} className="text-green-500 hover:text-green-600">
-                Register
-              </Link>
-              <Link href={"/login"} className="text-green-500 hover:text-green-600">
                 Login
               </Link>
             </div>
           </div>
-          <div className="flex-1">
+          <div className="flex-1 flex">
             {children}
           </div>
         </main>
