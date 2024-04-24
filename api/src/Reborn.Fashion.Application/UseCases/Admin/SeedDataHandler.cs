@@ -32,7 +32,11 @@ public class SeedDataHandler : ICommandHandler<SeedDataCommand>
         foreach (var listing in dbContext.Listings.ToArray())
         {
             await scheduler.ScheduleListingOpen(listing.Id, listing.DateRange.Start);
+            if (listing.DateRange.Start > DateTime.UtcNow)
+                listing.Publish();
         }
+
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         return default;
     }

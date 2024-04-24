@@ -6,12 +6,12 @@ namespace Reborn.Fashion.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class GetAllListingsController(IMediator mediator) : ControllerBase
+public class GetPublicListingsController(IMediator mediator) : ControllerBase
 {
     [HttpGet("/listings")]
-    public async Task<GetAllListingsResponse[]> HandleAsync()
+    public async Task<GetPublicListingsResponse[]> HandleAsync()
     {
-        var request = new GetAllListingsRequest();
+        var request = new GetPublicListingsRequest();
         var response = await mediator.Send(request);
         return response;
     }
